@@ -156,30 +156,35 @@ const app = {
     }
         // NextSong
         nextBtn.onclick=function(){
-            if(this.random){
-            app.playRandomSong();
-            }
+            if(this.isRandom){
+                app.playRandomSong();
+                }
             else{
-            app.nextSong();
-            app.isPlaying = true;
-            player.classList.add('playing');
-            cdAnimate.cancel();
-            cdAnimate.play();
-            audio.play();  
-            app.render();
-            app.scrollToActiveSong();
-            }      
+                app.nextSong();
+                app.isPlaying = true;
+                player.classList.add('playing');
+                cdAnimate.cancel();
+                cdAnimate.play();
+                audio.play();  
+                app.render();
+                app.scrollToActiveSong();
+                }      
         }
         // PreviousSong
-        prevBtn.onclick=function(){       
-            app.prevSong();
-            app.isPlaying = true;
-            player.classList.add('playing');
-            cdAnimate.cancel();
-            cdAnimate.play();
-            audio.play();
-            app.render();
-            app.scrollToActiveSong();
+        prevBtn.onclick=function(){   
+            if(this.isRandom){
+                app.playRandomSong();
+                }
+            else{    
+                app.prevSong();
+                app.isPlaying = true;
+                player.classList.add('playing');
+                cdAnimate.cancel();
+                cdAnimate.play();
+                audio.play();
+                app.render();
+                app.scrollToActiveSong();
+                }
         }
         // Random song
         randomBtn.onclick=function(){
