@@ -225,8 +225,8 @@ const app = {
 
     nextSong: function(){
         app.currentIndex++;
-            if(app.currentIndex >= app.songs.length-1){
-                
+            if(app.currentIndex >= app.songs.length-1)
+                app.currentIndex = 0 ;
             }
             app.loadCurrentSong();
             
