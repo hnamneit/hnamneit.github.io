@@ -52,8 +52,8 @@ const app = {
         {
             name : 'The Night',
             singer: 'Avicii',
-            path: '/song/music/thenight.mp3',
-            img: '/song/img/Thenight.jpeg'
+            path: '/song/music/Thenight.mp3',
+            img: '/song/img/thenight.jpeg'
         },
         {
             name : 'Counting Stars',
