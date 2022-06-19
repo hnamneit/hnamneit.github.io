@@ -155,9 +155,16 @@ const app = {
         
     }
         // NextSong
-        nextBtn.onclick=function(){
+       nextBtn.onclick=function(){
             if(app.isRandom){
                 app.playRandomSong();
+                app.isPlaying = true;
+                player.classList.add('playing');
+                cdAnimate.cancel();
+                cdAnimate.play();
+                audio.play();  
+                app.render();
+                app.scrollToActiveSong();
                 }
             else{
                 app.nextSong();
@@ -174,6 +181,13 @@ const app = {
         prevBtn.onclick=function(){   
             if(app.isRandom){
                 app.playRandomSong();
+                app.isPlaying = true;
+                player.classList.add('playing');
+                cdAnimate.cancel();
+                cdAnimate.play();
+                audio.play();  
+                app.render();
+                app.scrollToActiveSong();
                 }
             else{    
                 app.prevSong();
