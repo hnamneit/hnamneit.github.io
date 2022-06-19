@@ -12,7 +12,8 @@
  */
 
 const $ = document.querySelector.bind(document);
-const $$ = document.querySelectorAll.bind(document);
+const $$ = document.querySelectorAll.bind(document); 
+const PLAYER_STORAGE_KEY = 'Setting_Player';
 const heading = $('header h2')
 const cdthump = $('.cd-thumb')
 const audio = $('#audio')
@@ -68,7 +69,13 @@ const app = {
             img: '/song/img/playyah.jpg'
         },
         ],
-        //Render
+        
+    config: JSON.parse(localStorage.getItem(PLAYER_STORAGE_KEY)) || {},
+    setConfig: function(key,value) {
+        this.config[key] = value;
+        localStorage.setItem(PLAYER_STORAGE_KEY, JSON.stringify(this.config));
+    },
+    //Render
     render: function() {
         const html = this.songs.map( (song , index) => {
         
@@ -86,6 +93,7 @@ const app = {
         })
         $('.playlist').innerHTML = html.join('')
     },
+
     definedProperties: function() {
         Object.defineProperty(this,'currentSong', {
             get: function() {
@@ -155,7 +163,7 @@ const app = {
         
     }
         // NextSong
-       nextBtn.onclick=function(){
+        nextBtn.onclick=function(){
             if(app.isRandom){
                 app.playRandomSong();
                 app.isPlaying = true;
@@ -203,14 +211,17 @@ const app = {
         // Random song
         randomBtn.onclick=function(){
             app.isRandom = !app.isRandom;
+            app.setConfig('isRandom', app.isRandom);
             randomBtn.classList.toggle('active' , app.isRandom);
-            // app.playRandomSong();
         }
+
         // Repeat
         repeatBtn.onclick = function(){
             app.isRepeat = !app.isRepeat;
-            repeatBtn.classList.toggle('active',app.isRepeat)
+            app.setConfig('isRepeat', app.isRepeat);
+            repeatBtn.classList.toggle('active' ,   app.isRepeat)
         }
+        
         // NextSong When Ended
         audio.onended = function(){
             if(app.isRepeat){
@@ -241,11 +252,10 @@ const app = {
         }
 
     },
-
     nextSong: function(){
         app.currentIndex++;
-            if(app.currentIndex > app.songs.length-1){
-                app.currentIndex = 0 ;
+        if(app.currentIndex > app.songs.length-1){
+            app.currentIndex = 0 ;
             }
             app.loadCurrentSong();
             
@@ -273,7 +283,7 @@ const app = {
         $('.song.active').scrollIntoView({
             behavior : 'smooth',
             block: "end", 
-            inline: "center",
+            // inline: "center",
         })
      },
      
@@ -285,16 +295,28 @@ const app = {
         
     },
 
+    loadConfig: function() {
+        this.isRandom = app.config.isRandom;
+        this.isRepeat = app.config.isRepeat;
+    },
+
+
     start: function(){
+
+        this.loadConfig();
+
         // Dinh nghia cac thuoc tinh cho Object
-        this.definedProperties()
+        this.definedProperties();
         // lang nghe va xu ly cac su kien
-        this.handleEvents()
+        this.handleEvents();
 
         // Tai thong tin bai hat dau tien vao ung dung khi chay
-        this.loadCurrentSong()
+        this.loadCurrentSong();
 
-        this.render()
+        this.render();
+
+        repeatBtn.classList.toggle('active' , app.isRepeat);
+        randomBtn.classList.toggle('active' , app.isRandom);
     }
 
 }
