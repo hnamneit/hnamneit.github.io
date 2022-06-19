@@ -156,7 +156,7 @@ const app = {
     }
         // NextSong
         nextBtn.onclick=function(){
-            if(this.isRandom){
+            if(app.isRandom){
                 app.playRandomSong();
                 }
             else{
@@ -172,7 +172,7 @@ const app = {
         }
         // PreviousSong
         prevBtn.onclick=function(){   
-            if(this.isRandom){
+            if(app.isRandom){
                 app.playRandomSong();
                 }
             else{    
